@@ -1,0 +1,9 @@
+services:
+  training_pg:
+    container_name: training_pg
+    image: postgres:latest
+    restart: always
+    env_file:
+      - docker.env
+    ports:
+      - "7865:7865"
