@@ -29,4 +29,28 @@ export class ProductService {
     }
     return product;
   }
+
+  async deleteProductById(id: string) {
+    const deletedResponse = await this.productRepository.delete({ id });
+    if (!deletedResponse.affected) {
+      throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
+    }
+    return 'Product deleted successfully';
+  }
+
+  async deleteProducts() {
+    const deletedResponse = await this.productRepository.delete({});
+    if (!deletedResponse.affected) {
+      throw new HttpException('Something new Error', HttpStatus.BAD_REQUEST);
+    }
+    return 'Deleted all Products';
+  }
+
+  async updateProductById(id: string, updatedProductDto: CreateProductDto) {
+    const updatedProduct = await this.productRepository.findOneBy({ id });
+    if (updatedProductDto) {
+      return updatedProduct;
+    }
+    throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
+  }
 }
